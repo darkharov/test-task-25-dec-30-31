@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Test-Task</string>
+    <string name="go_back">Go back</string>
+    <string name="log_in">Log In</string>
+    <string name="name">Name</string>
+    <string name="name_requirements">Only letters or underscores, length 6–16</string>
+    <string name="password">Password</string>
+    <string name="password_requirements">Only digits or underscores, length 8–12</string>
+</resources>
