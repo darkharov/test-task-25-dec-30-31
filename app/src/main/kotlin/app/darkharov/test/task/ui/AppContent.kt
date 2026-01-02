@@ -26,11 +26,10 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import app.darkharov.test.task.R
-import app.darkharov.test.task.ui.commons.elements.top.bar.AppTopBar
-import app.darkharov.test.task.ui.commons.elements.top.bar.AppTopBarProps
-import app.darkharov.test.task.ui.screens.AppScreenKey
-import app.darkharov.test.task.ui.screens.list.ListScreen
-import app.darkharov.test.task.ui.screens.log.in_.LogInScreen
+import app.darkharov.test.task.commons.compose.elements.top.bar.AppTopBar
+import app.darkharov.test.task.commons.compose.elements.top.bar.AppTopBarProps
+import app.darkharov.test.task.list.ListScreen
+import app.darkharov.test.task.log.in_.LogInScreen
 
 @Composable
 internal fun AppContent() {

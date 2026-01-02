@@ -21,3 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Test-Task-Android-Denys-Arkharov"
 include(":app")
+include(":commons:compose")
+include(":screens:log-in")
+include(":commons:resources")
+include(":screens:list")

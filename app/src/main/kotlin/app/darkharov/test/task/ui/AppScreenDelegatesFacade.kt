@@ -3,9 +3,8 @@ package app.darkharov.test.task.ui
 import androidx.compose.material3.SnackbarHostState
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
-import app.darkharov.test.task.ui.commons.elements.top.bar.AppTopBarCallbacks
-import app.darkharov.test.task.ui.screens.AppScreenKey
-import app.darkharov.test.task.ui.screens.log.in_.LogInDelegate
+import app.darkharov.test.task.commons.compose.elements.top.bar.AppTopBarCallbacks
+import app.darkharov.test.task.log.in_.LogInDelegate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
