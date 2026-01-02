@@ -69,9 +69,9 @@ internal fun AppContent() {
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
-                snackbar = {
+                snackbar = { snackbarData ->
                     Snackbar(
-                        it,
+                        snackbarData = snackbarData,
                         modifier = Modifier
                             .windowInsetsPadding(WindowInsets.navigationBars),
                     )
