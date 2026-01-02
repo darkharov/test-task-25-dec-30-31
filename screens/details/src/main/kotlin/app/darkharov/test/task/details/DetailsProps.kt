@@ -8,8 +8,8 @@ import app.darkharov.test.task.commons.compose.elements.button.AppButtonStatePro
 @Stable
 interface DetailsProps {
     val title: TextFieldState
-    var checked: Boolean
-    var saving: Boolean
+    val checked: Boolean
+    val saving: Boolean
     val saveButtonState: AppButtonStateProps
 }
 
