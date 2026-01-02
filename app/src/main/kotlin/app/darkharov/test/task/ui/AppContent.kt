@@ -35,7 +35,7 @@ import app.darkharov.test.task.log.in_.LogInScreen
 @Composable
 internal fun AppContent() {
 
-    val backStack = rememberNavBackStack(AppScreenKey.List)
+    val backStack = rememberNavBackStack(AppScreenKey.Login)
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
