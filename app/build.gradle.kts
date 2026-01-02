@@ -74,4 +74,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
     ksp(libs.kotlin.metadata.jvm)
+
+    // Other
+    implementation(libs.kotlinx.collections.immutable)
 }
