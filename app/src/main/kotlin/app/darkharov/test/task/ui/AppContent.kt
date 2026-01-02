@@ -16,43 +16,54 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
-import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import app.darkharov.test.task.R
 import app.darkharov.test.task.ui.commons.elements.top.bar.AppTopBar
+import app.darkharov.test.task.ui.commons.elements.top.bar.AppTopBarProps
+import app.darkharov.test.task.ui.screens.AppScreenKey
 import app.darkharov.test.task.ui.screens.list.ListScreen
 import app.darkharov.test.task.ui.screens.log.in_.LogInScreen
-import kotlinx.serialization.Serializable
-
-@Serializable
-data object Login : NavKey
-
-@Serializable
-data object List : NavKey
 
 @Composable
 internal fun AppContent() {
-    val backStack = rememberNavBackStack(Login)
-    val navIconVisible by remember { derivedStateOf { backStack.isEmpty() } }
+
+    val backStack = rememberNavBackStack(AppScreenKey.Login)
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+
+    val delegates = remember {
+        AppScreenDelegatesFacade(
+            backStack = backStack,
+            coroutineScope = coroutineScope,
+            snackbarHostState = snackbarHostState,
+        )
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         topBar = {
             AppTopBar(
-                navIconVisible = navIconVisible,
-                onNavIconClick = {
-                    backStack.removeLastOrNull()
-                },
+                props = AppTopBarProps(
+                    title = stringResource(
+                        (backStack.lastOrNull() as AppScreenKey?)
+                            ?.toolbarTitleId
+                            ?: R.string._empty
+                    ),
+                    upIconVisible = backStack.size > 1,
+                    logOutIconVisible = (backStack.lastOrNull() as AppScreenKey?)
+                        ?.requiresLogin
+                        ?: false,
+                ),
+                callbacks = delegates,
             )
         },
         snackbarHost = {
@@ -85,17 +96,12 @@ internal fun AppContent() {
                 rememberViewModelStoreNavEntryDecorator(),
             ),
             entryProvider = entryProvider {
-                val delegates = AppScreenDelegatesFacade(
-                    backStack = backStack,
-                    coroutineScope = coroutineScope,
-                    snackbarHostState = snackbarHostState,
-                )
-                entry<Login> {
+                entry<AppScreenKey.Login> {
                     LogInScreen(
                         delegate = delegates,
                     )
                 }
-                entry<List> {
+                entry<AppScreenKey.List> {
                     ListScreen()
                 }
             },

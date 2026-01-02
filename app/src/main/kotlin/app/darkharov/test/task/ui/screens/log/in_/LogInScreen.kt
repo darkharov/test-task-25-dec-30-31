@@ -97,7 +97,7 @@ internal fun LogInScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = stringResource(R.string.log_in),
+                text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
                     .padding(vertical = 12.dp),

@@ -1,4 +1,4 @@
-package app.darkharov.test.task.ui.commons.elements
+package app.darkharov.test.task.ui.commons.elements.top.bar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import app.darkharov.test.task.R
 import app.darkharov.test.task.ui.commons.theme.AppIcons
@@ -22,31 +23,43 @@ import app.darkharov.test.task.ui.commons.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppTopBar(
-    navIconVisible: Boolean,
-    onNavIconClick: () -> Unit,
+internal fun AppTopBar(
+    props: AppTopBarProps,
+    callbacks: AppTopBarCallbacks,
     modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = stringResource(R.string.app_name),
+                text = props.title,
             )
         },
         modifier = modifier,
         navigationIcon = {
-            if (navIconVisible) {
+            if (props.upIconVisible) {
                 Icon(
                     painter = rememberVectorPainter(AppIcons.arrowBack),
                     contentDescription = stringResource(R.string.go_back),
                     modifier = Modifier
                         .clip(CircleShape)
-                        .clickable { onNavIconClick() }
+                        .clickable {
+                            callbacks.onUpClick()
+                        }
                         .padding(12.dp),
                 )
             }
         },
         actions = {
+            if (props.logOutIconVisible) {
+                Icon(
+                    painter = rememberVectorPainter(AppIcons.logout),
+                    contentDescription = stringResource(R.string.log_out),
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable { callbacks.onLogOutClick() }
+                        .padding(12.dp),
+                )
+            }
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -58,11 +71,16 @@ fun AppTopBar(
 
 @PreviewLightDark
 @Composable
-private fun AppTopBarPreview() {
+private fun AppTopBarPreview(
+    @PreviewParameter(
+        provider = AppTopBarMocks::class,
+    )
+    props: AppTopBarProps,
+) {
     AppTheme {
         AppTopBar(
-            navIconVisible = true,
-            onNavIconClick = {},
+            props = props,
+            callbacks = AppTopBarCallbacksMock,
         )
     }
 }
