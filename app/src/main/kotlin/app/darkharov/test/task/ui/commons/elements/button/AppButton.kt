@@ -26,11 +26,9 @@ fun AppButton(
 ) {
     Button(
         onClick = {
-            if (state == AppButtonStateProps.Normal) {
-                onClick()
-            }
+            onClick()
         },
-        enabled = (state != AppButtonStateProps.Disabled),
+        enabled = state == AppButtonStateProps.Normal,
         modifier = modifier,
     ) {
         ProgressIndicatorPlaceholder()
@@ -49,7 +47,7 @@ fun AppButton(
         )
         if (state == AppButtonStateProps.Progress) {
             CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.tertiary,
                 strokeWidth = 2.dp,
                 modifier = Modifier
                     .size(ProgressIndicatorSize),
