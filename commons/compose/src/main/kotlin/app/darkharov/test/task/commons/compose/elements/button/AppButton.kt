@@ -20,9 +20,9 @@ private val ProgressIndicatorSize = 16.dp
 @Composable
 fun AppButton(
     text: String,
-    state: AppButtonStateProps = AppButtonStateProps.Normal,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    state: AppButtonStateProps = AppButtonStateProps.Normal,
 ) {
     Button(
         onClick = {
