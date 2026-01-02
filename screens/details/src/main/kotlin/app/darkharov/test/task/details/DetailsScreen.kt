@@ -127,7 +127,7 @@ private fun DetailsScreen(
                         .height(8.dp),
                 )
                 AppButton(
-                    text = "Save",
+                    text = stringResource(R.string.save),
                     state = props.saveButtonState,
                     onClick = {
                         callbacks.onSave()
