@@ -1,4 +1,4 @@
-package app.darkharov.test.task.list.item
+package app.darkharov.test.task.list.elements.item
 
 import androidx.compose.runtime.Stable
 

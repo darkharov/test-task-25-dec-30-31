@@ -9,4 +9,5 @@
     <string name="password_requirements">Only digits or underscores, length 8–12</string>
     <string name="list">List</string>
     <string name="list_is_empty">The list is empty…</string>
+    <string name="check_all">Check all</string>
 </resources>

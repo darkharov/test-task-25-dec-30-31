@@ -49,6 +49,7 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
     implementation(project(":commons:compose"))
     implementation(project(":screens:log-in"))
     implementation(project(":screens:list"))

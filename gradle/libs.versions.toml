@@ -4,7 +4,9 @@ kotlin = "2.3.0"
 
 coreKtx = "1.17.0"
 lifecycleRuntimeKtx = "2.10.0"
+kotlinxCoroutinesCore = "1.10.2"
 kotlinxSerializationCore = "1.9.0"
+javaxInject = "1"
 composeBom = "2025.12.01"
 activityCompose = "1.12.2"
 nav3Core = "1.0.0"
@@ -21,7 +23,9 @@ kotlinxCollectionsImmutable = "0.4.0"
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
 
 # Compose
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
