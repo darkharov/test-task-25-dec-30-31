@@ -28,6 +28,7 @@ import androidx.navigation3.ui.NavDisplay
 import app.darkharov.test.task.R
 import app.darkharov.test.task.commons.compose.elements.top.bar.AppTopBar
 import app.darkharov.test.task.commons.compose.elements.top.bar.AppTopBarProps
+import app.darkharov.test.task.details.DetailsScreen
 import app.darkharov.test.task.list.ListScreen
 import app.darkharov.test.task.log.in_.LogInScreen
 
@@ -102,6 +103,12 @@ internal fun AppContent() {
                 }
                 entry<AppScreenKey.List> {
                     ListScreen(
+                        delegate = delegates,
+                    )
+                }
+                entry<AppScreenKey.Details> { key ->
+                    DetailsScreen(
+                        itemId = key.itemId,
                         delegate = delegates,
                     )
                 }

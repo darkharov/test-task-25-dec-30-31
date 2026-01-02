@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface ItemRepository {
     fun all(): Flow<List<Item>>
+    suspend fun get(id: Int): Item
+    suspend fun put(item: Item)
     suspend fun setChecked(id: Int, checked: Boolean)
     suspend fun setAllChecked(checked: Boolean)
 }

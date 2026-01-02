@@ -21,6 +21,13 @@ sealed class AppScreenKey(
         toolbarTitleId = R.string.list,
     )
 
+    @Serializable
+    data class Details(
+        val itemId: Int?,
+    ) : AppScreenKey(
+        toolbarTitleId = R.string.details,
+    )
+
     companion object {
         val Home: AppScreenKey = List // alias
     }

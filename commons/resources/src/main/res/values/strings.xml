@@ -10,4 +10,7 @@
     <string name="list">List</string>
     <string name="list_is_empty">The list is empty…</string>
     <string name="check_all">Check all</string>
+    <string name="details">Details</string>
+    <string name="item_text">Item text</string>
+    <string name="checked">Checked</string>
 </resources>

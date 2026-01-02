@@ -2,6 +2,7 @@ package app.darkharov.test.task.commons.compose.elements.fields
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
@@ -22,9 +23,10 @@ fun AppTextField(
     supportingText: String,
     imeAction: ImeAction,
     onKeyboardAction: KeyboardActionHandler,
-    isError: Boolean,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    isError: Boolean = false,
+    inputTransformation: InputTransformation? = null,
 ) {
     OutlinedTextField(
         state = state,
@@ -45,6 +47,7 @@ fun AppTextField(
             imeAction = imeAction,
         ),
         onKeyboardAction = onKeyboardAction,
+        inputTransformation = inputTransformation,
     )
 }
 

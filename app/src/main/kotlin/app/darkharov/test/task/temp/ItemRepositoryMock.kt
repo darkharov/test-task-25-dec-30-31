@@ -27,6 +27,11 @@ class ItemRepositoryMock @Inject constructor() : ItemRepository {
         itemsFlow
             .onStart { delay(1.seconds) }   // to simulate initial loading
 
+    override suspend fun get(id: Int): Item =
+        mutex.withLock {
+            idItems.getValue(id)
+        }
+
     override suspend fun setChecked(id: Int, checked: Boolean) {
         mutex.withLock {
             idItems[id] = idItems.getValue(id).copy(checked = checked)
@@ -59,4 +64,12 @@ class ItemRepositoryMock @Inject constructor() : ItemRepository {
             )
         }.associateBy { it.id }
             .toMutableMap()
+
+    override suspend fun put(item: Item) {
+        mutex.withLock {
+            idItems[item.id] = item
+            delay(1.seconds)   // to simulate long work
+            emitNewDataSet()
+        }
+    }
 }

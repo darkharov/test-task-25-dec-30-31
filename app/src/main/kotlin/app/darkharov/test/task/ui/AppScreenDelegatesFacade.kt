@@ -4,6 +4,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import app.darkharov.test.task.commons.compose.elements.top.bar.AppTopBarCallbacks
+import app.darkharov.test.task.details.DetailDelegate
 import app.darkharov.test.task.list.ListDelegate
 import app.darkharov.test.task.log.in_.LogInDelegate
 import kotlinx.coroutines.CoroutineScope
@@ -15,6 +16,7 @@ internal class AppScreenDelegatesFacade(
     private val backStack: NavBackStack<NavKey>,
 ) : LogInDelegate,
     ListDelegate,
+    DetailDelegate,
     AppTopBarCallbacks {
 
     override fun showSnackbar(message: String) {
@@ -38,6 +40,10 @@ internal class AppScreenDelegatesFacade(
     }
 
     override fun goToItemDetails(itemId: Int) {
-        // TODO
+        backStack.add(AppScreenKey.Details(itemId = itemId))
+    }
+
+    override fun exit() {
+        backStack.removeLastOrNull()
     }
 }
