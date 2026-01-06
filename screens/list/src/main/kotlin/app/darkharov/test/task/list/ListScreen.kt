@@ -20,8 +20,6 @@ import app.darkharov.test.task.commons.compose.elements.AppNoContentMessage
 import app.darkharov.test.task.commons.compose.elements.AppPreloader
 import app.darkharov.test.task.commons.compose.theme.AppTheme
 import app.darkharov.test.task.list.elements.check.all.CheckAll
-import app.darkharov.test.task.list.elements.item.ListCallbacks
-import app.darkharov.test.task.list.elements.item.ListCallbacksMock
 import app.darkharov.test.task.list.elements.item.ListItem
 
 @Composable

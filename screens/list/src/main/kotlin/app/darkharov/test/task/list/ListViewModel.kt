@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.darkharov.test.task.domain.ItemRepository
 import app.darkharov.test.task.list.elements.item.ItemsToListPropsMapper
-import app.darkharov.test.task.list.elements.item.ListCallbacks
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
