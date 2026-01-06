@@ -1,5 +1,6 @@
-package app.darkharov.test.task.temp
+package app.darkharov.test.task.data.internal.di
 
+import app.darkharov.test.task.data.ItemRepositoryImpl
 import app.darkharov.test.task.domain.ItemRepository
 import dagger.Binds
 import dagger.Module
@@ -11,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 internal interface ItemRepositoryModule {
 
     @Binds
-    fun itemRepository(impl: ItemRepositoryMock): ItemRepository
+    fun itemRepository(impl: ItemRepositoryImpl): ItemRepository
 }

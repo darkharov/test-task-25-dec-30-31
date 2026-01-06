@@ -1,4 +1,4 @@
-package app.darkharov.test.task.temp
+package app.darkharov.test.task.data
 
 import app.darkharov.test.task.domain.Item
 import app.darkharov.test.task.domain.ItemRepository
@@ -13,7 +13,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 @Singleton
-class ItemRepositoryMock @Inject constructor() : ItemRepository {
+internal class ItemRepositoryImpl @Inject constructor() : ItemRepository {
 
     private val mutex = Mutex()
     private val idItems = dataSet()
