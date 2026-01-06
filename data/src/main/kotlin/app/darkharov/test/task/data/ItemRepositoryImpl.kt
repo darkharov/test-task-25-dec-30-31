@@ -16,46 +16,14 @@ import kotlinx.coroutines.sync.withLock
 internal class ItemRepositoryImpl @Inject constructor() : ItemRepository {
 
     private val mutex = Mutex()
-    private val idItems = dataSet()
+    private val idsItems = createIdsItems()
     private val itemsFlow = MutableSharedFlow<List<Item>>(replay = 1)
 
     init {
-        emitNewDataSet()
+        emitItemList()
     }
 
-    override fun all(): Flow<List<Item>> =
-        itemsFlow
-            .onStart { delay(1.seconds) }   // to simulate initial loading
-
-    override suspend fun get(id: Int): Item =
-        mutex.withLock {
-            idItems.getValue(id)
-        }
-
-    override suspend fun setChecked(id: Int, checked: Boolean) {
-        mutex.withLock {
-            idItems[id] = idItems.getValue(id).copy(checked = checked)
-            emitNewDataSet()
-        }
-    }
-
-    private fun emitNewDataSet() {
-        val newList = idItems.values.sortedBy { it.id }
-        itemsFlow.tryEmit(newList)
-    }
-
-    override suspend fun setAllChecked(checked: Boolean) {
-        mutex.withLock {
-            idItems
-                .iterator()
-                .forEach { entry ->
-                    entry.setValue(entry.value.copy(checked = checked))
-                }
-            emitNewDataSet()
-        }
-    }
-
-    private fun dataSet() =
+    private fun createIdsItems() =
         List(30) { index ->
             Item(
                 id = index + 1,
@@ -65,11 +33,43 @@ internal class ItemRepositoryImpl @Inject constructor() : ItemRepository {
         }.associateBy { it.id }
             .toMutableMap()
 
+    private fun emitItemList() {
+        val newList = idsItems.values.sortedBy { it.id }
+        itemsFlow.tryEmit(newList)
+    }
+
+    override fun all(): Flow<List<Item>> =
+        itemsFlow
+            .onStart { delay(1.seconds) }   // to simulate initial loading
+
+    override suspend fun get(id: Int): Item =
+        mutex.withLock {
+            idsItems.getValue(id)
+        }
+
+    override suspend fun setChecked(id: Int, checked: Boolean) {
+        mutex.withLock {
+            idsItems[id] = idsItems.getValue(id).copy(checked = checked)
+            emitItemList()
+        }
+    }
+
+    override suspend fun setAllChecked(checked: Boolean) {
+        mutex.withLock {
+            idsItems
+                .iterator()
+                .forEach { entry ->
+                    entry.setValue(entry.value.copy(checked = checked))
+                }
+            emitItemList()
+        }
+    }
+
     override suspend fun put(item: Item) {
         mutex.withLock {
-            idItems[item.id] = item
-            delay(1.seconds)   // to simulate long work
-            emitNewDataSet()
+            idsItems[item.id] = item
+            emitItemList()
         }
+        delay(1.seconds)    // to simulate long work
     }
 }
