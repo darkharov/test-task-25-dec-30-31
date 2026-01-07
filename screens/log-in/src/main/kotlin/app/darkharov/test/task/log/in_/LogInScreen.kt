@@ -102,11 +102,11 @@ internal fun LogInScreen(
                     .padding(vertical = 12.dp),
             )
             AppTextField(
-                state = props.login,
+                state = props.login.value,
                 enabled = props.fieldsEnabled,
                 label = stringResource(R.string.name),
                 supportingText = stringResource(R.string.name_requirements),
-                isError = props.loginError,
+                isError = props.login.error,
                 imeAction = ImeAction.Next,
                 onKeyboardAction = {
                     passwordFocusRequester.requestFocus()
@@ -123,10 +123,10 @@ internal fun LogInScreen(
                     .height(8.dp),
             )
             AppSecureTextField(
-                state = props.password,
+                state = props.password.value,
                 label = stringResource(R.string.password),
                 supportingText = stringResource(R.string.password_requirements),
-                isError = props.passwordError,
+                isError = props.password.error,
                 imeAction = ImeAction.Done,
                 onKeyboardAction = {
                     callbacks.onAttemptToComplete()

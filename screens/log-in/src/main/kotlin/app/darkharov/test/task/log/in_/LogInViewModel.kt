@@ -22,24 +22,17 @@ internal class LogInViewModel @Inject constructor() :
     LogInProps,
     LogInCallbacks {
 
+    override val login = FieldPropsImpl(Regex("^([_\\p{Alpha}]{6,16})$"))
+    override val password = FieldPropsImpl(Regex("^([_\\d]{8,12})$"))
+    override val fieldsEnabled by derivedStateOf { !(loggingIn) }
+    override val formValid by derivedStateOf { login.valid && password.valid }
+    override val logInButtonState by derivedStateOf { computeLogInButtonState() }
+
     private val correctLogin = "qwerty"
     private val correctPassword = "11112222"
-
     private val events = Channel<Event>(capacity = Channel.UNLIMITED)
-
-    private val loginField = Field(Regex("^([_\\p{Alpha}]{6,16})$"))
-    private val passwordField = Field(Regex("^([_\\d]{8,12})$"))
-    private val allFields = listOf(loginField, passwordField)
-
-    override val formValid by derivedStateOf { loginField.valid && passwordField.valid }
     private var loggingIn by mutableStateOf(false)
-
-    override val login get() = loginField.value
-    override val loginError get() = loginField.error
-    override val password get() = passwordField.value
-    override val passwordError get() = passwordField.error
-    override val fieldsEnabled by derivedStateOf { !(loggingIn) }
-    override val logInButtonState by derivedStateOf { computeLogInButtonState() }
+    private val allFields = listOf(login, password)
 
     private fun computeLogInButtonState(): AppButtonStateProps =
         if (loggingIn) {
@@ -49,18 +42,18 @@ internal class LogInViewModel @Inject constructor() :
         }
 
     override fun onLoginUnfocused() {
-        loginField.notifyUnfocused()
+        login.notifyUnfocused()
     }
 
     override fun onPasswordUnfocused() {
-        passwordField.notifyUnfocused()
+        password.notifyUnfocused()
     }
 
     override fun onAttemptToComplete() {
         if (allFields.all { it.valid }) {
             logIn(
-                login = loginField.value.text.toString(),
-                password = passwordField.value.text.toString(),
+                login = login.value.text.toString(),
+                password = password.value.text.toString(),
             )
         } else {
             allFields.forEach { it.indicateErrorIfNeeded() }
@@ -95,11 +88,13 @@ internal class LogInViewModel @Inject constructor() :
         data class OnLoginFailed(val message: String) : Event()
     }
 
-    private inner class Field(private val regex: Regex) {
+    inner class FieldPropsImpl(
+        private val regex: Regex,
+    ) : LogInProps.FieldProps {
 
-        val value = TextFieldState()
+        override val value = TextFieldState()
+        override val error by derivedStateOf { indicateIfNotValid && !(valid) }
         val valid get() = value.text.matches(regex)
-        val error by derivedStateOf { indicateIfNotValid && !(valid) }
         private var indicateIfNotValid by mutableStateOf(false)
 
         fun notifyUnfocused() {
