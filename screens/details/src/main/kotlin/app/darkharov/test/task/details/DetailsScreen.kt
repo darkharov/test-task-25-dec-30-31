@@ -42,7 +42,9 @@ fun DetailsScreen(
 ) {
     val viewModel = hiltViewModel<DetailsViewModel, DetailsViewModel.Factory>(
         creationCallback = { factory ->
-            factory.create(itemId = itemId)
+            factory.create(
+                itemId = itemId,
+            )
         }
     )
     EventConsumer(viewModel.events()) { event ->
@@ -93,7 +95,7 @@ private fun DetailsScreen(
                     inputTransformation = InputTransformation.maxLength(MAX_LENGTH_OF_TEXT_FIELD),
                     modifier = Modifier
                         .fillMaxWidth(),
-                    enabled = !(props.saving),
+                    enabled = props.titleFieldEnabled,
                 )
                 Spacer(
                     modifier = Modifier

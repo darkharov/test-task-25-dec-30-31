@@ -8,8 +8,8 @@ import app.darkharov.test.task.commons.compose.elements.button.AppButtonStatePro
 @Stable
 interface DetailsProps {
     val title: TextFieldState
+    val titleFieldEnabled: Boolean
     val checked: Boolean
-    val saving: Boolean
     val saveButtonState: AppButtonStateProps
 }
 
@@ -21,6 +21,7 @@ class DetailsMock : PreviewParameterProvider<DetailsProps> {
             title = TextFieldState(
                 initialText = "Title",
             ),
+            titleFieldEnabled = true,
             checked = true,
             saveButtonState = AppButtonStateProps.Normal,
         ),
@@ -28,8 +29,8 @@ class DetailsMock : PreviewParameterProvider<DetailsProps> {
 
     private data class Prototype(
         override val title: TextFieldState = TextFieldState(),
+        override var titleFieldEnabled: Boolean = false,
         override var checked: Boolean = false,
-        override var saving: Boolean = false,
         override val saveButtonState: AppButtonStateProps = AppButtonStateProps.Disabled,
     ) : DetailsProps
 }

@@ -30,27 +30,15 @@ class DetailsViewModel @AssistedInject constructor(
     DetailsProps,
     DetailsCallbacks {
 
-    private val events = Channel<Event>(capacity = Channel.UNLIMITED)
-
     override val title = TextFieldState()
     override var checked by mutableStateOf(false)
     override val saveButtonState by derivedStateOf { computeButtonState() }
-    override var saving by mutableStateOf(false)
+    override val titleFieldEnabled by derivedStateOf { !(saving) }
 
+    private val events = Channel<Event>(capacity = Channel.UNLIMITED)
+    private var saving by mutableStateOf(false)
     private var initialValue by mutableStateOf<Item?>(null)
-    private val filledOutValue by derivedStateOf {
-        Item(
-            id = itemId ?: 0,
-            title = title.text.toString(),
-            checked = checked,
-        )
-    }
-
-    private fun computeButtonState(): AppButtonStateProps = when {
-        saving -> AppButtonStateProps.Progress
-        initialValue == filledOutValue -> AppButtonStateProps.Disabled
-        else -> AppButtonStateProps.Normal
-    }
+    private val filledOutValue by derivedStateOf { computeFilledOutValue() }
 
     init {
         if (itemId != null) {
@@ -62,6 +50,20 @@ class DetailsViewModel @AssistedInject constructor(
             }
         }
     }
+
+    private fun computeFilledOutValue(): Item =
+        Item(
+            id = itemId ?: 0,
+            title = title.text.toString(),
+            checked = checked,
+        )
+
+    private fun computeButtonState(): AppButtonStateProps =
+        when {
+            saving -> AppButtonStateProps.Progress
+            initialValue == filledOutValue -> AppButtonStateProps.Disabled
+            else -> AppButtonStateProps.Normal
+        }
 
     override fun onCheckedChange(newValue: Boolean) {
         checked = newValue
